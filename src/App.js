@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import OptionsNav from './components/OptionsNav';
+import {Route, Routes} from 'react-router-dom'
+import FormularioCreate from './components/FormularioCreate.js';
+import ViewData from './components/ViewData';
+import FormularioEdit from './components/FormularioEdit';
 
 function App() {
+
+  const [edit,setEdit]=useState(null)
+  const cargarInfoEdit = (element) => {
+    console.log(element)
+    setEdit(element)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <OptionsNav/>
+        <Routes>
+          <Route exact path="/" element={<ViewData cargarInfoEdit={cargarInfoEdit}/>}/>
+          <Route Router path="/formulario" element={<FormularioCreate/>}/>
+        </Routes> 
+        {edit &&
+          <FormularioEdit
+           edit={edit}
+           setEdit={setEdit}
+          />
+        }
+      </div>
     </div>
   );
 }
